@@ -11,7 +11,7 @@ class ResearchAgent:
 
     _logger = create_logger("🔬 Research Agent")
 
-    RESEARCH_AGENT_SYSTEM_PROMPT = load_prompt("research_agent_system_prompt.txt")
+    SYSTEM_PROMPT = load_prompt("research_agent_system_prompt.txt")
 
     def __init__(
         self,
@@ -47,7 +47,7 @@ class ResearchAgent:
                         "content": self._format_user_message(),
                     }
                 ],
-                system_prompt=self.RESEARCH_AGENT_SYSTEM_PROMPT,
+                system_prompt=self.SYSTEM_PROMPT,
                 tools=["web_search"],
                 reasoning_level=reasoning_level,
                 run_id=self.run_id,
