@@ -56,7 +56,7 @@ def create_logger(name: str) -> logging.Logger:
     logger.addHandler(stdout)
 
     # Set the logger level
-    logger.setLevel(logging.WARNING)
+    logger.setLevel(logging.DEBUG)
 
     # Disable propagation to prevent duplicate log messages
     logger.propagate = False

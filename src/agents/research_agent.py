@@ -37,7 +37,8 @@ class ResearchAgent:
         """
         Conduct research on the specified topic using the LLM.
         """
-        self._logger.debug("Starting research on: %s", self.research_topic)
+        self._logger.debug("Starting web search for: '%s'", self.research_topic)
+
         try:
             response = await self.client.generate_response(
                 model_tier=model_tier,
@@ -56,22 +57,15 @@ class ResearchAgent:
             self._agent_output = response.output_text
 
             self._logger.debug(
-                "Finished. Summary length: %d chars\n\nQuery:\n\n%s\n\nResponse:\n\n%s\n",
+                "Search finished — got %d characters back for topic: '%s'",
                 len(self._agent_output),
                 self.research_topic,
-                self.output,
             )
-
             return self._agent_output
 
-        except RuntimeError as e:
-            self._logger.error(
-                "Error during research on: %s | Error: %s",
-                self.research_topic,
-                e,
-                exc_info=True,
-            )
-            self._agent_output = "error during research. Could not retrieve information."
+        except RuntimeError:
+            self._logger.error("Search failed for topic: '%s'", self.research_topic)
+            self._agent_output = "Error during research. Could not retrieve information."
             return self._agent_output
 
     def _format_user_message(self) -> str:

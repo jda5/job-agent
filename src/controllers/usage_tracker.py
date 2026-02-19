@@ -8,5 +8,5 @@ class UsageTracker:
         else:
             self._usage[run_id] = amount
 
-    def get_total_usage(self, run_id: str) -> float | None:
+    def get_run_cost(self, run_id: str) -> float | None:
         return self._usage.get(run_id)
