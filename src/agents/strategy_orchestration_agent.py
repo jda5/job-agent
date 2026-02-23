@@ -1,7 +1,7 @@
 from clients.openai_client import OpenAIClient
 from controllers.project_controller import ProjectController
-from models.agent_models import ModelTier, ReasoningLevel
-from utils.file_utils import load_prompt
+from models.agent_models import ClientResponse, ModelTier, ReasoningLevel
+from utils.file_utils import STRATEGY_BRIEF_FILENAME, load_prompt
 from utils.logging_utils import create_logger
 from utils.research_agent_utils import run_research_agents
 
@@ -30,7 +30,7 @@ class StrategyOrchestrationAgent:
         Formats the initial user message, injecting the candidate's CV, job details,
         and clear instructions on the expected output.
         """
-        context = "\n\n".join(project.load_files())
+        context = "\n\n".join(project.load_context())
 
         return f"""
 Please review the following context files containing my CV, the job description, and supporting information.
@@ -44,6 +44,10 @@ Do not write the application yourself. Focus purely on research and strategy.
 ### CONTEXT FILES ###
 {context}
 """.strip()
+
+    def _format_response(self, project: ProjectController, response: ClientResponse) -> str:
+        project.save_output(STRATEGY_BRIEF_FILENAME, response.output_text)
+        return response.output_text
 
     # -------------------------------------------------------------------------------- public methods
 
@@ -111,7 +115,7 @@ Do not write the application yourself. Focus purely on research and strategy.
                 self._logger.debug(
                     "Minimum turns satisfied — accepting final synthesis on turn %d", turn + 1
                 )
-                return response.output_text
+                return self._format_response(project, response)
 
             self._logger.debug(
                 "Model dispatched %d parallel research task(s) — waiting for results...",
@@ -136,6 +140,6 @@ Do not write the application yourself. Focus purely on research and strategy.
         )
 
         # Save the final response for downstream agents and return the output
-        self._logger.debug("Saving strategic brief → '%s'", "strategy-orchestration-agent-output.txt")
+        self._logger.debug("Saving strategic brief → '%s'", STRATEGY_BRIEF_FILENAME)
 
-        return response.output_text
+        return self._format_response(project, response)

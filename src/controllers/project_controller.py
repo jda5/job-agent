@@ -25,13 +25,28 @@ class ProjectController:
 
     # -------------------------------------------------------------------------------- public methods
 
-    def load_files(self) -> Generator[str, None, None]:
+    def load_context(self) -> Generator[str, None, None]:
+        """
+        Loads all files from the project's context directory and the default directory,
+        yielding their content formatted with filename tags.
+        """
         for path in [self.context_dir, self.default_dir]:
             for file in path.glob("*"):
                 if file.is_file():
                     with open(file, "r", encoding="utf-8") as f:
                         content = f.read()
                     yield self._format_context(file.name, content)
+
+    def load_output(self, filename: str) -> str:
+        """
+        Loads a specific file from the project's output directory.
+        """
+        output_file = self.output_dir / filename
+        if not output_file.exists():
+            raise FileNotFoundError(f"Output file '{filename}' not found in project '{self.project_name}'.")
+
+        with open(output_file, "r", encoding="utf-8") as f:
+            return f.read()
 
     def save_output(self, filename: str, content: str) -> None:
         output_file = self.output_dir / filename

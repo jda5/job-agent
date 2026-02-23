@@ -1,10 +1,11 @@
 import json
 from asyncio import sleep
-from typing import Type
+from typing import Literal, Type
 
 import openai
-from openai import APIConnectionError, APIError, RateLimitError, omit
+from openai import APIConnectionError, APIError, Omit, RateLimitError, omit
 from openai.types.responses import Response
+from openai.types.shared_params.reasoning import Reasoning
 
 from config import OPENAI_API_KEY
 from controllers.usage_tracker import UsageTracker
@@ -64,9 +65,9 @@ class OpenAIClient:
 
     # -------------------------------------------------------------------------------- private methods
 
-    def _format_reasoning_level(self, reasoning_level: ReasoningLevel | None) -> dict:
+    def _format_reasoning_level(self, reasoning_level: ReasoningLevel | None) -> Reasoning | Omit:
         if reasoning_level:
-            return {"effort": self.REASONING_MAP[reasoning_level]}
+            return Reasoning(effort=self.REASONING_MAP[reasoning_level])  # type: ignore
         return omit
 
     def _format_response(self, response: Response) -> ClientResponse:
@@ -102,6 +103,13 @@ class OpenAIClient:
             if not pricing:
                 self._logger.warning(
                     "No pricing information found for model %s. Usage not tracked.",
+                    model_name,
+                )
+                return
+
+            if response.usage is None:
+                self._logger.warning(
+                    "No usage information found in response for model %s. Usage not tracked.",
                     model_name,
                 )
                 return
@@ -221,6 +229,9 @@ class OpenAIClient:
                     **kwargs,
                 )
                 self._track_usage(run_id=run_id, response=response)
+                if response.output_parsed is None:
+                    raise RuntimeError("Received response with no parsable output")
+
                 return response.output_parsed
 
             except (APIError, APIConnectionError, RateLimitError) as e:
