@@ -1,7 +1,8 @@
 from clients.openai_client import OpenAIClient
 from controllers.project_controller import ProjectController
 from models.agent_models import ModelTier, ReasoningLevel
-from utils.file_utils import STRATEGY_BRIEF_FILENAME, load_prompt
+from models.application_models import ApplicationResponse
+from utils.file_utils import APPLICATION_RESPONSE_FILENAME, STRATEGY_BRIEF_FILENAME, load_prompt
 from utils.logging_utils import create_logger
 
 
@@ -41,12 +42,14 @@ Please write a tailored job application based on the following context and strat
 {strategy_brief}
 """.strip()
 
-    async def run(self, project: ProjectController, run_id: str | None = None) -> str | None:
+    async def run(
+        self, project: ProjectController, run_id: str | None = None
+    ) -> ApplicationResponse | None:
         """ """
 
         try:
-            response = await self.client.generate_response(
-                model_tier=ModelTier.POWERFUL,
+            response = await self.client.generate_structured_output(
+                output_schema=ApplicationResponse,
                 messages=[
                     {
                         "role": "user",
@@ -54,11 +57,13 @@ Please write a tailored job application based on the following context and strat
                     }
                 ],
                 system_prompt=self.SYSTEM_PROMPT,
+                model_tier=ModelTier.POWERFUL,
                 reasoning_level=ReasoningLevel.MEDIUM,
                 run_id=run_id,
             )
-            project.save_output("writer-agent-output.txt", response.output_text)
-            return response.output_text
+
+            project.save_output(APPLICATION_RESPONSE_FILENAME, response.model_dump_json(indent=2))
+            return response
 
         except RuntimeError:
             return None

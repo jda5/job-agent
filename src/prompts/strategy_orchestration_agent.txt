@@ -61,10 +61,6 @@ You must output a highly factual Strategic Brief strictly following this structu
 *(Include this section ONLY if specific questions are provided in the job info. If none, omit entirely.)*
 - **Question:** [Text of the question]
   - **Strategic Angle:** [What factual information from the company research and the applicant's background should be leveraged to answer this best]
-
-### 3. Portfolio & Work Samples
-*(Include this section ONLY if requested by the job description.)*
-- **Suggested Work:** [Specific projects/links from the candidate's provided context or web research that directly prove their capability for this specific role's demands]
 </output_requirements>
 
 <important>

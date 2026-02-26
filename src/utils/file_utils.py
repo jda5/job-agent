@@ -1,5 +1,6 @@
 from config import ROOT
 
+APPLICATION_RESPONSE_FILENAME = "application_responses.json"
 STRATEGY_BRIEF_FILENAME = "strategy_brief.txt"
 
 
