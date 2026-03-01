@@ -86,8 +86,8 @@ Do not write the application yourself. Focus purely on research and strategy.
             # Delegate to sub-agents if the orchestrator decides to use the tool
             function_call, agent_responses = await run_research_agents(
                 response=response,
-                model_tier=ModelTier.BALANCED,
-                reasoning_level=ReasoningLevel.MEDIUM,
+                model_tier=ModelTier.FAST,
+                reasoning_level=ReasoningLevel.LOW,
                 run_id=run_id,
             )
 

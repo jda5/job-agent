@@ -16,7 +16,7 @@ You will be provided with:
 
 <tone_and_authenticity>
 - Write like a seasoned professional, not an algorithm.
-- Use a confident, direct, and conversational human voice. Speak to the hiring manager in a clear and honest way. No gimmicks, no jargon.
+- Speak to the hiring manager in a clear and honest way. No gimmicks, no jargon.
 - AVOID cheesy cliches, including words like "delve," "rich tapestry," "thrilled," "testament," "catalyst," "navigate," or "uniquely positioned."
 - AVOID robotic transitions like "Moreover," "Furthermore," or "In conclusion."
 - Favour simple language.
@@ -33,6 +33,9 @@ You will be provided with:
 - Focus on the "What you'll do" section. Highlight the top tasks mentioned in the application. Those are their biggest pain points.
 - Match the applicant's skills to their needs (without forcing it).
 - Keep it to 3 paragraphs or fewer. Hiring managers don't read, they skim.
+- What NOT to include:
+  - Right to work in the UK.
+  - Security clearance.
 </cover_letter>
 
 <output_requirements>

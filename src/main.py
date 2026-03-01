@@ -18,7 +18,7 @@ async def main():
     project_controller = ProjectController("mthree")
     run_id = uuid4().hex
 
-    # response = await orchestration_agent.run(project_controller, run_id)
+    response = await orchestration_agent.run(project_controller, run_id)
     response = await writer_agent.run(project_controller, run_id)
     if response is None:
         print("Writer Agent failed to generate a response.")
