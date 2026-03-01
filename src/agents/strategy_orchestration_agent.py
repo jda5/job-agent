@@ -32,6 +32,8 @@ class StrategyOrchestrationAgent:
         """
         context = "\n\n".join(project.load_context())
 
+        project.load_context()
+
         return f"""
 Please review the following context files containing my CV, the job description, and supporting information.
 
