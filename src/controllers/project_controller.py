@@ -16,26 +16,33 @@ class ProjectController:
 
     def _initialize_project_structure(self) -> None:
         self.project_root.mkdir(parents=True, exist_ok=True)
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.context_dir.mkdir(parents=True, exist_ok=True)
-        print(self.output_dir)
 
-    def _format_context(self, filename: str, content: str) -> str:
+    def _format_content(self, filename: str, content: str) -> str:
         return f"<{filename}>\n{content.strip()}\n</{filename}>"
 
     # -------------------------------------------------------------------------------- public methods
 
-    def load_context(self) -> Generator[str, None, None]:
+    def load_candidate_files(self) -> Generator[str, None, None]:
         """
         Loads all files from the project's context directory and the default directory,
         yielding their content formatted with filename tags.
         """
-        for path in [self.context_dir, self.default_dir]:
-            for file in path.glob("*"):
-                if file.is_file():
-                    with open(file, "r", encoding="utf-8") as f:
-                        content = f.read()
-                    yield self._format_context(file.name, content)
+        for file in self.default_dir.glob("*"):
+            if file.is_file():
+                with open(file, "r", encoding="utf-8") as f:
+                    content = f.read()
+                yield self._format_content(file.name, content)
+
+    def load_job_files(self) -> Generator[str, None, None]:
+        """
+        Loads all files from the project's context directory and the default directory,
+        yielding their content formatted with filename tags.
+        """
+        for file in self.context_dir.glob("*"):
+            if file.is_file():
+                with open(file, "r", encoding="utf-8") as f:
+                    content = f.read()
+                yield self._format_content(file.name, content)
 
     def load_output(self, filename: str) -> str:
         """

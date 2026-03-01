@@ -27,15 +27,20 @@ class WriterAgent:
         Formats the initial user message, injecting the candidate's CV, job details,
         and clear instructions on the expected output.
         """
-        context = "\n\n".join(project.load_context())
-
+        candidate_context = "\n\n".join(project.load_candidate_files())
+        job_context = "\n\n".join(project.load_job_files())
         strategy_brief = project.load_output(STRATEGY_BRIEF_FILENAME)
 
         return f"""
 Please write a tailored job application based on the following context and strategic brief.
+
+## JOB INFORMATION
+
+{job_context}
         
-## CONTEXT FILES
-{context}
+## CANDIDATE INFORMATION
+
+{candidate_context}
 
 ## STRATEGIC BRIEF
 

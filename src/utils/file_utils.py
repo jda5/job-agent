@@ -1,7 +1,8 @@
 from config import ROOT
 
-APPLICATION_RESPONSE_FILENAME = "application_responses.json"
-STRATEGY_BRIEF_FILENAME = "strategy_brief.txt"
+APPLICATION_RESPONSE_FILENAME = "application-responses.json"
+JOB_DESCRIPTION_FILENAME = "job-description.txt"
+STRATEGY_BRIEF_FILENAME = "strategy-brief.txt"
 
 
 def load_prompt(filename: str) -> str:
