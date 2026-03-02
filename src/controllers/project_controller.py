@@ -1,6 +1,8 @@
+from pathlib import Path
 from typing import Generator
 
 from config import ROOT
+from utils.file_utils import APPLICATION_RESPONSE_FILENAME, STRATEGY_BRIEF_FILENAME
 
 
 class ProjectController:
@@ -16,6 +18,8 @@ class ProjectController:
 
     def _initialize_project_structure(self) -> None:
         self.project_root.mkdir(parents=True, exist_ok=True)
+        self.context_dir.mkdir(parents=True, exist_ok=True)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def _format_content(self, filename: str, content: str) -> str:
         return f"<{filename}>\n{content.strip()}\n</{filename}>"
@@ -59,3 +63,15 @@ class ProjectController:
         output_file = self.output_dir / filename
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(content)
+
+    def has_job_description(self) -> bool:
+        return self.context_dir.exists() and any(self.context_dir.iterdir())
+
+    def has_results(self) -> bool:
+        return (self.output_dir / APPLICATION_RESPONSE_FILENAME).exists()
+
+    def has_strategy_brief(self) -> bool:
+        return (self.output_dir / STRATEGY_BRIEF_FILENAME).exists()
+
+    def get_job_description_path(self) -> Path:
+        return self.context_dir / f"{self.project_name}-job-description.txt"
