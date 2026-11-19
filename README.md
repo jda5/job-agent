@@ -1,5 +1,7 @@
 # Job Agent
 
+🤖 Readme writtten by Claude, code mostly written by me 🙋‍♂️
+
 A small command-line tool that drafts job applications. Give it your CV and a job description, and it researches the company, works out an angle, and writes a cover letter plus answers to any application questions.
 
 ## How it works
