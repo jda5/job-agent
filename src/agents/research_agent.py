@@ -69,7 +69,7 @@ class ResearchAgent:
             return self._agent_output
 
     def _format_user_message(self) -> str:
-        return f"Please search the web for to gather data on the following:\n\n{self.research_topic}"
+        return f"Please search the web to gather data on the following:\n\n{self.research_topic}"
 
     @property
     def output(self) -> str:

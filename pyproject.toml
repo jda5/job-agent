@@ -1,18 +1,15 @@
 [project]
-name = "JobAgent"
+name = "job-agent"
 version = "0.1.0"
 description = "An AI agent that helps you apply for jobs by generating personal statements and job questions."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "dotenv>=0.9.9",
     "openai>=2.21.0",
     "pydantic>=2.12.5",
+    "python-dotenv>=1.0.0",
     "rich>=13.0.0",
 ]
-
-[project.scripts]
-job-agent = "cli.main:main"
 
 [tool.ruff]
 exclude = [

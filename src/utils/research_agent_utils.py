@@ -57,10 +57,10 @@ async def run_research_agents(
     Execute research agents and format results for any provider.
 
     Args:
-        caller_provider: The LLM provider that initiated the research agent run
         response: The client response containing function/tool calls
         model_tier: The model tier to use for the research agents
         reasoning_level: The reasoning level to use for the research agents
+        run_id: Optional run identifier used for cost tracking
 
     Returns:
         Tuple of (has_tool_calls, intermediate_messages)

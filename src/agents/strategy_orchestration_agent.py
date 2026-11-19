@@ -30,7 +30,7 @@ class StrategyOrchestrationAgent:
         Formats the initial user message, injecting the candidate's CV, job details,
         and clear instructions on the expected output.
         """
-        canidate_context = "\n\n".join(project.load_candidate_files())
+        candidate_context = "\n\n".join(project.load_candidate_files())
         job_context = "\n\n".join(project.load_job_files())
 
         return f"""
@@ -48,7 +48,7 @@ Do not write the application yourself. Focus purely on research and strategy.
 
 ## CANDIDATE INFORMATION
 
-{canidate_context}
+{candidate_context}
 """.strip()
 
     def _format_response(self, project: ProjectController, response: ClientResponse) -> str:

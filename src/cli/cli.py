@@ -15,12 +15,10 @@ from rich.rule import Rule
 
 from agents.strategy_orchestration_agent import StrategyOrchestrationAgent
 from agents.writer_agent import WriterAgent
-from clients.openai_client import OpenAIClient
-from controllers.project_controller import (
-    APPLICATION_RESPONSE_FILENAME,
-    ProjectController,
-)
-from controllers.usage_tracker import UsageTracker
+from controllers.project_controller import ProjectController
+from dependencies.clients import get_openai_client
+from dependencies.controllers import get_usage_tracker
+from utils.file_utils import APPLICATION_RESPONSE_FILENAME
 
 console = Console()
 
@@ -244,12 +242,14 @@ def view_results(project: ProjectController) -> None:
 
     input("  Press Enter to return to the menu...")
 
-    # -------------------------------------------------------------------------------- agent execution
+
+# -------------------------------------------------------------------------------- agent execution
 
 
 async def _run_agents_async(project: ProjectController) -> float | None:
-    usage_tracker = UsageTracker()
-    openai_client = OpenAIClient(usage_tracker)
+    # Use the shared client/tracker so research sub-agent costs are included in the run cost
+    usage_tracker = get_usage_tracker()
+    openai_client = get_openai_client()
     orchestration_agent = StrategyOrchestrationAgent(openai_client)
     writer_agent = WriterAgent(openai_client)
     run_id = uuid4().hex

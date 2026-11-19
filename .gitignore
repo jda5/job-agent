@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Job Agent — candidate documents and generated applications (personal data)
+projects/

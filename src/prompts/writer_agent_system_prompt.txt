@@ -46,7 +46,7 @@ You will be provided with:
 ```json
 {
   "cover_letter": "...",
-  "application_questions": [
+  "question_answers": [
     {
       "question": "...",
       "answer": "..."

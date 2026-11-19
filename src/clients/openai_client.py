@@ -1,6 +1,6 @@
 import json
 from asyncio import sleep
-from typing import Literal, Type
+from typing import Type
 
 import openai
 from openai import APIConnectionError, APIError, Omit, RateLimitError, omit

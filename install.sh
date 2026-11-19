@@ -61,13 +61,18 @@ else
     fi
 fi
 
-# ── 5. Make launcher executable ────────────────────────────────────────────────
+# ── 5. Create the folder for your CV and other candidate documents ─────────────
+mkdir -p "$DIR/projects/_default"
+
+# ── 6. Make launcher executable ────────────────────────────────────────────────
 chmod +x "$DIR/Launch Job Agent.command"
 
 echo ""
 echo "=============================="
 echo -e "${GREEN}  Setup complete!${NC}"
 echo "=============================="
+echo ""
+echo "Before your first run, put your CV (as a .txt or .md file) in projects/_default/."
 echo ""
 echo "To run Job Agent, double-click 'Launch Job Agent.command' in Finder."
 echo ""

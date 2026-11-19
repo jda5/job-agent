@@ -41,7 +41,7 @@ Please write a tailored job application based on the following context and strat
 ## JOB INFORMATION
 
 {job_context}
-        
+
 ## CANDIDATE INFORMATION
 
 {candidate_context}
@@ -54,7 +54,10 @@ Please write a tailored job application based on the following context and strat
     async def run(
         self, project: ProjectController, run_id: str | None = None
     ) -> ApplicationResponse | None:
-        """ """
+        """
+        Drafts the cover letter and question answers, saves them to the project's
+        output directory and returns them. Returns None if generation fails.
+        """
 
         try:
             response = await self.client.generate_structured_output(

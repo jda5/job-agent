@@ -28,7 +28,7 @@ class ProjectController:
 
     def load_candidate_files(self) -> Generator[str, None, None]:
         """
-        Loads all files from the project's context directory and the default directory,
+        Loads the candidate's files (CV etc.) from the shared `_default` directory,
         yielding their content formatted with filename tags.
         """
         for file in self.default_dir.glob("*"):
@@ -39,8 +39,8 @@ class ProjectController:
 
     def load_job_files(self) -> Generator[str, None, None]:
         """
-        Loads all files from the project's context directory and the default directory,
-        yielding their content formatted with filename tags.
+        Loads the job's files (description, questions) from the project's context
+        directory, yielding their content formatted with filename tags.
         """
         for file in self.context_dir.glob("*"):
             if file.is_file():
